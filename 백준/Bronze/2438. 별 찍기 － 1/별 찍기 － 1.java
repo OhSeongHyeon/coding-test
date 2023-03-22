@@ -12,12 +12,20 @@ public class Main {
 		) {
 			String firstLine = bf.readLine();
 			int line = Integer.parseInt(firstLine);
+			StringBuilder stringBuilder = new StringBuilder();
 			for (int i = 1; i <= line; i++) {
-				for (int j = 0; j < i; j++) {
-					System.out.print("*");
+				int j = 1;
+				while (true) {
+					stringBuilder.append("*");
+					j++;
+					if( i < j ) {
+						stringBuilder.append("\n");
+						break;
+					}
 				}
-				System.out.println();
 			}
+			bw.write(stringBuilder.toString());
+			bw.flush();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
