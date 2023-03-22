@@ -10,13 +10,11 @@ public class Main {
 			BufferedReader bf = new BufferedReader(new InputStreamReader(System.in));
 			BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 		) {
-			int len = Integer.valueOf(bf.readLine());
-			
+			int len = Integer.parseInt(bf.readLine());
 			for (int i = 0; i < len; i++) {
 				String[] split = bf.readLine().split(" ");
-				bw.write(Integer.valueOf(split[0]) + Integer.valueOf(split[1]) + "\n");
+				bw.write(Integer.parseInt(split[0]) + Integer.parseInt(split[1]) + "\n");
 			}
-			
 			bw.flush();
 		} catch (IOException e) {
 			e.printStackTrace();
