@@ -3,7 +3,6 @@ import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
-import java.util.StringTokenizer;
 
 public class Main {
 	public static void main(String[] args) {
@@ -11,19 +10,11 @@ public class Main {
 			BufferedReader bf = new BufferedReader(new InputStreamReader(System.in));
 			BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 		) {
-			String firstLine = bf.readLine();
-			int len = Integer.parseInt(firstLine);
-
+			int len = Integer.valueOf(bf.readLine());
+			
 			for (int i = 0; i < len; i++) {
-				String nextLine = bf.readLine();
-				StringTokenizer token = new StringTokenizer(nextLine);
-				
-				int inputNum1 = Integer.parseInt(token.nextToken());
-				int inputNum2 = Integer.parseInt(token.nextToken());
-				
-				int sum = inputNum1 + inputNum2;
-				
-				bw.write(String.format("%d\n", sum));
+				String[] split = bf.readLine().split(" ");
+				bw.write(Integer.valueOf(split[0]) + Integer.valueOf(split[1]) + "\n");
 			}
 			
 			bw.flush();
