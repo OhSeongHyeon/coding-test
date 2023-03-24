@@ -14,24 +14,18 @@ public class Main {
 			BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out))
 		){
 			String[] readLine = br.readLine().split("");
-			int[] asciiArr = IntStream.rangeClosed(97,122).toArray();
-			int[] firstTimeLocaion = new int[asciiArr.length];
+			int[] firstTimeLocation = new int[26];
+			Arrays.fill(firstTimeLocation, -1);
 			
-			for (int i = 0; i < firstTimeLocaion.length; i++) {
-				firstTimeLocaion[i] = -1;
-			}
-			
-			for (int i = 0; i < asciiArr.length; i++) {
-				for (int j = 0; j < readLine.length; j++) {
-					String alphabet = String.valueOf((char) asciiArr[i]);
-					if( alphabet.equals(readLine[j]) ) {
-						firstTimeLocaion[i] = j;
-						break;
-					}
+			for (int i = 0; i < readLine.length; i++) {
+				char c = readLine[i].charAt(0);
+				if (firstTimeLocation[c - 'a'] == -1) {
+					firstTimeLocation[c - 'a'] = i;
 				}
 			}
 			
-			bw.write(Arrays.toString(firstTimeLocaion).replaceAll("[^0-9\\s\\-]", ""));
+			String result = Arrays.toString(firstTimeLocation).replaceAll("[\\[\\],]", "");
+			bw.write(result);
 			bw.flush();
 		}catch(IOException ioe) {
 			ioe.printStackTrace();
