@@ -1,6 +1,4 @@
 import java.io.*;
-import java.util.*;
-import java.util.stream.*;
 
 public class Main {
 	
@@ -10,15 +8,18 @@ public class Main {
     		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out))
 		){
         	int num = Integer.parseInt(br.readLine());
-        	int fac = 1;
-        	for(int i = num; i > 1; i--) {
-        		fac *= i;
-        	}
-        	
+        	int fac = factorial(num);
         	bw.write(String.valueOf(fac));
         	bw.flush();
         }catch(Exception e) {
         	e.printStackTrace();
         }
     }
+
+	private static int factorial(int num) {
+		if(num <= 1) {
+			return 1;
+		}
+		return num * factorial(num - 1);
+	}
 }
