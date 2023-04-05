@@ -19,11 +19,7 @@ public class Main {
         		days = goal - back;
         	}else {
         		days = (goal-move) / (move-back);
-        		if( (goal-move)%(move-back) == 0 ) {
-            		days += 1;
-        		}else {
-            		days += 2;
-        		}
+        		days += (goal-move)%(move-back) == 0 ? 1 : 2;
         	}
         	
         	bw.write(String.valueOf(days));
