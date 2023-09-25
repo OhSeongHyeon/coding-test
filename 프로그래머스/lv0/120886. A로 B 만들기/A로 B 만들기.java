@@ -1,12 +1,17 @@
 class Solution {
     public int solution(String before, String after) {
-        int answer = 0;
         int len = before.length();
+        int[] alpha = new int[26];
         
         for (int i = 0; i < len; i++) {
-			answer += (before.charAt(i) - after.charAt(i));
+			alpha[before.charAt(i) - 'a']++;
+			alpha[after.charAt(i) - 'a']++;
 		}
         
-        return answer==0 ? 1 : 0;
+        for (int i : alpha) {
+			if(i%2 == 1) return 0;
+		}
+        
+        return 1;
     }
 }
