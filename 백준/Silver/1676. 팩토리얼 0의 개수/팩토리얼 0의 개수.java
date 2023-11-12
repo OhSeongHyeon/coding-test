@@ -1,0 +1,23 @@
+import java.io.*;
+
+public class Main {
+
+    public static void main(String[] args) {
+        try(
+        	BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        	BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out))
+		){
+        	int n = Integer.parseInt(br.readLine());
+        	int cnt = 0;
+        	
+        	for (int i = 5; i <= n; i *= 5) {
+                cnt += n / i;
+            }
+        	
+        	bw.write(String.valueOf(cnt));
+        	bw.flush();
+        }catch(IOException ioe) {
+        	ioe.printStackTrace();
+		}
+    }
+}
