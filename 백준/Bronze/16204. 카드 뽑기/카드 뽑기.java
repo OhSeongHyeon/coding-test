@@ -1,0 +1,17 @@
+import java.util.*;
+import java.io.*;
+
+public class Main {
+	
+	public static void main(String[] args) throws Exception {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		StringTokenizer st = new StringTokenizer(br.readLine());
+		int n = Integer.parseInt(st.nextToken());
+		int m = Integer.parseInt(st.nextToken()); // m: O, n-m: X
+		int k = Integer.parseInt(st.nextToken());
+		int oMin = Math.min(m, k);
+		int xMin = Math.min(n-m, n-k);
+		System.out.println(oMin + xMin);
+	}
+	
+}
