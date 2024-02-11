@@ -11,17 +11,14 @@ public class Main {
     	long res = 0;
     	
     	for (int i = 0; i < l; i++) {
-			int a = input.charAt(i) - 'a' + 1;
+			long a = input.charAt(i) - 'a' + 1;
 			for (int j = 0; j < i; j++) {
-				a *= r;
-				if(a > m) {
-					a %= m;
-				}
+				a = (a * r)%m;
 			}
 			res += a;
 		}
     	
-    	System.out.println(res);
+    	System.out.println(res%m);
     }
 
 }
