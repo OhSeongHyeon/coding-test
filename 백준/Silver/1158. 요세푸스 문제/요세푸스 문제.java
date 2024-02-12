@@ -1,5 +1,4 @@
 import java.util.*;
-import java.util.stream.IntStream;
 import java.io.*;
 
 public class Main {
@@ -9,24 +8,20 @@ public class Main {
 		String[] sp = br.readLine().split("\\s");
 		int n = Integer.parseInt(sp[0]);
 		int k = Integer.parseInt(sp[1]);
-		/*
-		Queue<Integer> queue = IntStream.rangeClosed(1, n)
-                .boxed()
-                .collect(Collectors.toCollection(LinkedList::new));
-        */
-		Queue<Integer> queue = IntStream.rangeClosed(1, n)
-			.collect(LinkedList::new, Queue::offer, Queue::addAll);
 		StringBuilder sb = new StringBuilder("<");
-		int turn = 1;
-
-		while( !queue.isEmpty() ) {
-			if(turn++%k == 0 || !queue.offer(queue.poll())) {
-				sb.append(queue.poll()).append(queue.isEmpty() ? "" : ", ");
-				turn = 1;
+		Queue<Integer> queue = new LinkedList<>();
+		
+		for (int i = 1; i <= n; i++) {
+			queue.offer(i);
+		}
+		
+		for (int i = 1; !queue.isEmpty(); i++) {
+			if(i%k == 0 || !queue.offer(queue.poll())) {
+				sb.append(queue.poll()).append(", ");
 			}
 		}
 		
-		System.out.println(sb.append(">"));
+		System.out.println(sb.delete(sb.length()-2, sb.length()).append(">"));
 	}
 
 }
