@@ -11,8 +11,8 @@ public class Main {
 		
 		for (int i = 0; i < n; i++) {
 			String[] sp = br.readLine().split("\\s+");
-			boolean isPos = isPos(sp); // type 1
-			//boolean isPos = isPos(alpha, sp); // type 2
+			//boolean isPos = isPos(sp); // type 1
+			boolean isPos = isPos(alpha, sp); // type 2
 			sb.append(isPos ? "Possible\n" : "Impossible\n");
 		}
 		
