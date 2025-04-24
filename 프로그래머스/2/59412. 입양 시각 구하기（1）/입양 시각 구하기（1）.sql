@@ -1,0 +1,14 @@
+SELECT
+    `HOUR`
+,   COUNT(*) AS `COUNT`
+FROM (
+    SELECT
+        HOUR(DATETIME) AS `HOUR`
+    FROM
+        ANIMAL_OUTS
+) AS H
+WHERE 1=1
+AND `HOUR` >=  9
+AND `HOUR` <  20
+GROUP BY `HOUR`
+ORDER BY `HOUR`
