@@ -1,0 +1,44 @@
+# SELECT
+#     I.ITEM_ID
+# ,   T.PARENT_ITEM_ID
+# ,   I.ITEM_NAME
+# ,   I.RARITY
+# FROM
+#     ITEM_INFO AS I
+# INNER JOIN
+#     ITEM_TREE AS T
+# ON
+#     I.ITEM_ID = T.ITEM_ID
+
+/* 오답 - 부모아이디 최대값 찾은 후 이보다 큰 얘들 찾으면 되는줄...
+SELECT
+    ITEM_ID
+,   ITEM_NAME
+,   RARITY
+FROM
+    ITEM_INFO
+WHERE
+    ITEM_ID > (
+        SELECT
+            MAX(PARENT_ITEM_ID)
+        FROM
+            ITEM_TREE
+    )
+ORDER BY
+    ITEM_ID DESC;
+*/
+
+SELECT
+    I.ITEM_ID
+,   I.ITEM_NAME
+,   I.RARITY
+FROM
+    ITEM_INFO AS I
+LEFT JOIN
+    ITEM_TREE AS T
+ON
+    I.ITEM_ID = T.PARENT_ITEM_ID
+WHERE
+    T.PARENT_ITEM_ID IS NULL
+ORDER BY
+    I.ITEM_ID DESC;
