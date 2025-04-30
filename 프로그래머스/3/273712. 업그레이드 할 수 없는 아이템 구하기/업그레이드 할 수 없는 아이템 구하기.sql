@@ -28,6 +28,16 @@ ORDER BY
     ITEM_ID DESC;
 */
 
+# SELECT
+#     *
+# FROM
+#     ITEM_INFO AS I
+# LEFT JOIN
+#     ITEM_TREE AS T
+# ON
+#     I.ITEM_ID = T.PARENT_ITEM_ID;
+
+# /*
 SELECT
     I.ITEM_ID
 ,   I.ITEM_NAME
@@ -42,3 +52,4 @@ WHERE
     T.PARENT_ITEM_ID IS NULL
 ORDER BY
     I.ITEM_ID DESC;
+# */
