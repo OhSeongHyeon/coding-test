@@ -1,4 +1,4 @@
-/*
+# /*
 WITH FISH_AGGR AS (
     SELECT
         I.ID
@@ -23,7 +23,7 @@ FROM
 WHERE
     LEN_RANK = 1
 ORDER BY ID;
-*/
+# */
 /*
 SELECT
     ID
@@ -47,7 +47,7 @@ WHERE
     LEN_RANK = 1
 ORDER BY ID;
 */
-
+/*
 SELECT
     I.ID
 ,   N.FISH_NAME
@@ -64,3 +64,4 @@ WHERE I.LENGTH = (
     WHERE I.FISH_TYPE = I2.FISH_TYPE
 )
 ORDER BY ID;
+*/
