@@ -1,3 +1,34 @@
+# SELECT
+#     E.EMP_NO
+# ,   E.EMP_NAME
+# ,   E.SAL
+# ,   G.HALF_YEAR
+# ,   G.SCORE
+# FROM
+#     HR_EMPLOYEES AS E
+# INNER JOIN
+#     HR_GRADE AS G
+# ON
+#     E.EMP_NO = G.EMP_NO
+# ORDER BY 1;
+
+
+# SELECT
+#     E.EMP_NO
+# ,   E.EMP_NAME
+# ,   E.SAL
+# ,   AVG(G.SCORE) AS AVG_SCORE
+# FROM
+#     HR_EMPLOYEES AS E
+# INNER JOIN
+#     HR_GRADE AS G
+# ON
+#     E.EMP_NO = G.EMP_NO
+# GROUP BY
+#     E.EMP_NO
+# ORDER BY 1;
+
+
 SELECT
     EMP_NO
 ,   EMP_NAME
