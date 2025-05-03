@@ -1,0 +1,61 @@
+# SELECT
+#     YEAR(O.SALES_DATE)  AS `YEAR`
+# ,   MONTH(O.SALES_DATE) AS `MONTH`
+# ,   U.GENDER
+# ,   COUNT(*) AS USERS
+# FROM
+#     USER_INFO AS U
+# INNER JOIN
+#     ONLINE_SALE AS O
+# ON
+#     U.USER_ID = O.USER_ID
+# WHERE
+#     U.GENDER IS NOT NULL
+# GROUP BY
+#     YEAR(O.SALES_DATE)
+# ,   MONTH(O.SALES_DATE)
+# ,   U.GENDER
+# ORDER BY
+#     `YEAR`, `MONTH`, U.GENDER;
+
+
+# SELECT
+#     USER_ID
+# ,   YEAR(SALES_DATE)  AS `YEAR`
+# ,   MONTH(SALES_DATE) AS `MONTH`   
+# FROM
+#     ONLINE_SALE
+# GROUP BY
+#     USER_ID
+
+
+SELECT
+    O.`YEAR`
+,   O.`MONTH`
+,   U.GENDER
+,   COUNT(*) AS USERS
+FROM (
+    SELECT
+        USER_ID
+    ,   GENDER
+    FROM
+        USER_INFO
+    WHERE
+        GENDER IS NOT NULL
+) AS U
+INNER JOIN (
+    SELECT DISTINCT
+        USER_ID
+    ,   YEAR(SALES_DATE)  AS `YEAR`
+    ,   MONTH(SALES_DATE) AS `MONTH`   
+    FROM
+        ONLINE_SALE
+) AS O
+ON
+    U.USER_ID = O.USER_ID
+GROUP BY
+    O.`YEAR`
+,   O.`MONTH`
+,   U.GENDER
+ORDER BY
+    `YEAR`, `MONTH`, U.GENDER;
