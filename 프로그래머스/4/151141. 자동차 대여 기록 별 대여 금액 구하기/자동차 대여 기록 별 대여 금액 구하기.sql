@@ -1,0 +1,98 @@
+# SELECT
+#     CAR_ID
+# ,   CAR_TYPE
+# ,   DAILY_FEE
+# FROM
+#     CAR_RENTAL_COMPANY_CAR
+# WHERE
+#     CAR_TYPE = '트럭'
+# ORDER BY 1;
+
+
+# SELECT
+#     HISTORY_ID
+# ,   CAR_ID
+# ,   START_DATE
+# ,   END_DATE
+# ,   (DATEDIFF(END_DATE, START_DATE) + 1) AS RENTAL_DAYS
+# FROM
+#     CAR_RENTAL_COMPANY_RENTAL_HISTORY
+# ORDER BY 2, 1;
+
+
+# SELECT
+#     CAR_TYPE
+# ,   DURATION_TYPE
+# ,   DISCOUNT_RATE
+# FROM
+#     CAR_RENTAL_COMPANY_DISCOUNT_PLAN
+# WHERE
+#     CAR_TYPE = '트럭';
+
+
+SELECT
+    HISTORY_ID
+,   ROUND(
+        CASE
+            WHEN RENTAL_DAYS >= 90 THEN DAILY_FEE * RENTAL_DAYS * 0.85
+            WHEN RENTAL_DAYS >= 30 THEN DAILY_FEE * RENTAL_DAYS * 0.92
+            WHEN RENTAL_DAYS >=  7 THEN DAILY_FEE * RENTAL_DAYS * 0.95
+            ELSE DAILY_FEE * RENTAL_DAYS
+        END
+    ) AS FEE
+FROM (
+    SELECT
+        HISTORY_ID
+    ,   DAILY_FEE
+    ,   RENTAL_DAYS
+    FROM (
+        SELECT
+            CAR_ID
+        ,   DAILY_FEE
+        FROM
+            CAR_RENTAL_COMPANY_CAR
+        WHERE
+            CAR_TYPE = '트럭'
+    ) AS C
+    INNER JOIN (
+        SELECT
+            HISTORY_ID
+        ,   CAR_ID
+        ,   (DATEDIFF(END_DATE, START_DATE) + 1) AS RENTAL_DAYS
+        FROM
+            CAR_RENTAL_COMPANY_RENTAL_HISTORY
+    ) AS H
+    ON
+        C.CAR_ID = H.CAR_ID
+) AS F
+ORDER BY
+    FEE DESC, HISTORY_ID DESC;
+
+
+# SELECT
+#     HISTORY_ID
+# ,   ROUND(
+#         CASE
+#             WHEN RENTAL_DAYS >= 90 THEN DAILY_FEE * RENTAL_DAYS * 0.90
+#             WHEN RENTAL_DAYS >= 30 THEN DAILY_FEE * RENTAL_DAYS * 0.93
+#             WHEN RENTAL_DAYS >=  7 THEN DAILY_FEE * RENTAL_DAYS * 0.95
+#             ELSE DAILY_FEE * RENTAL_DAYS
+#         END
+#     ) AS FEE
+# FROM (
+#     SELECT
+#         H.HISTORY_ID
+#     ,   H.CAR_ID
+#     ,   C.DAILY_FEE
+#     ,   (DATEDIFF(H.END_DATE, H.START_DATE) + 1) AS RENTAL_DAYS
+#     FROM
+#         CAR_RENTAL_COMPANY_CAR AS C
+#     INNER JOIN
+#         CAR_RENTAL_COMPANY_RENTAL_HISTORY AS H
+#     ON
+#         C.CAR_ID = H.CAR_ID
+#     WHERE
+#         C.CAR_TYPE = '트럭'
+# ) AS F
+# ORDER BY
+#     FEE DESC, HISTORY_ID DESC;
