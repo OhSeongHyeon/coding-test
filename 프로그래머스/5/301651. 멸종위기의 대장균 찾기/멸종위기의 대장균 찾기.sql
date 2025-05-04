@@ -1,0 +1,151 @@
+# SELECT
+#     E1.ID        AS FIRST_GEN_ID
+# ,   E1.PARENT_ID AS FIRST_GEN_PARENT_ID
+# ,   E2.ID        AS SECOND_GEN_ID
+# ,   E2.PARENT_ID AS SECOND_GEN_PARENT_ID
+# ,   E3.ID        AS THIRD_GEN_ID
+# ,   E3.PARENT_ID AS THIRD_GEN_PARENT_ID
+# ,   E4.ID        AS FOURTH_GEN_ID
+# ,   E4.PARENT_ID AS FOURTH_GEN_PARENT_ID
+# ,   E5.ID        AS FIFTH_GEN_ID
+# ,   E5.PARENT_ID AS FIFTH_GEN_PARENT_ID
+# FROM
+#     ECOLI_DATA AS E1
+# INNER JOIN
+#     ECOLI_DATA AS E2
+# ON
+#     E1.ID = E2.PARENT_ID
+# AND E1.PARENT_ID IS NULL
+# LEFT JOIN
+#     ECOLI_DATA AS E3
+# ON
+#     E2.ID = E3.PARENT_ID
+# LEFT JOIN
+#     ECOLI_DATA AS E4
+# ON
+#     E3.ID = E4.PARENT_ID
+# LEFT JOIN
+#     ECOLI_DATA AS E5
+# ON
+#     E4.ID = E5.PARENT_ID
+# ORDER BY 1;
+
+
+# WITH RECURSIVE ECOLI_GEN_DATA AS (
+#     SELECT
+#         ID
+#     ,   PARENT_ID
+#     ,   1 AS GENERATION
+#     FROM
+#         ECOLI_DATA
+#     WHERE
+#         PARENT_ID IS NULL
+    
+#     UNION ALL
+    
+#     SELECT
+#         C.ID
+#     ,   C.PARENT_ID
+#     ,   P.GENERATION + 1
+#     FROM
+#         ECOLI_GEN_DATA AS P
+#     INNER JOIN
+#         ECOLI_DATA     AS C
+#     ON
+#         P.ID = C.PARENT_ID
+#     WHERE
+#         GENERATION < 4
+# )
+# SELECT * FROM ECOLI_GEN_DATA;
+
+
+# WITH RECURSIVE ECOLI_GEN_DATA AS (
+#     SELECT
+#         ID
+#     ,   PARENT_ID
+#     ,   1 AS GENERATION
+#     FROM
+#         ECOLI_DATA
+#     WHERE
+#         PARENT_ID IS NULL
+    
+#     UNION ALL
+    
+#     SELECT
+#         C.ID
+#     ,   C.PARENT_ID
+#     ,   P.GENERATION + 1
+#     FROM
+#         ECOLI_GEN_DATA AS P
+#     INNER JOIN
+#         ECOLI_DATA     AS C
+#     ON
+#         P.ID = C.PARENT_ID
+#     WHERE
+#         GENERATION < 4
+# ),
+# ECOLI_CHILDREN_CNT_DATA AS (
+#     SELECT
+#         PARENT_ID AS ID
+#     ,   COUNT(*)  AS CHILDREN_CNT
+#     FROM
+#         ECOLI_GEN_DATA
+#     WHERE
+#         PARENT_ID IS NOT NULL
+#     GROUP BY
+#         PARENT_ID
+# )
+# SELECT * FROM ECOLI_CHILDREN_CNT_DATA;
+
+
+WITH RECURSIVE ECOLI_GEN_DATA AS (
+    SELECT
+        ID
+    ,   PARENT_ID
+    ,   1 AS GENERATION
+    FROM
+        ECOLI_DATA
+    WHERE
+        PARENT_ID IS NULL
+    
+    UNION ALL
+    
+    SELECT
+        C.ID
+    ,   C.PARENT_ID
+    ,   P.GENERATION + 1
+    FROM
+        ECOLI_GEN_DATA AS P
+    INNER JOIN
+        ECOLI_DATA     AS C
+    ON
+        P.ID = C.PARENT_ID
+    # WHERE
+    #     GENERATION < 4
+),
+ECOLI_CHILDREN_CNT_DATA AS (
+    SELECT
+        PARENT_ID AS ID
+    ,   COUNT(*)  AS CHILDREN_CNT
+    FROM
+        ECOLI_GEN_DATA
+    WHERE
+        PARENT_ID IS NOT NULL
+    GROUP BY
+        PARENT_ID
+)
+SELECT
+    COUNT(*) AS `COUNT`
+,   G.GENERATION
+FROM
+    ECOLI_GEN_DATA AS G
+LEFT JOIN
+    ECOLI_CHILDREN_CNT_DATA AS C
+ON
+    G.ID = C.ID
+WHERE
+    CHILDREN_CNT IS NULL
+GROUP BY
+    G.GENERATION
+ORDER BY
+    G.GENERATION ASC;
